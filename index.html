@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HR System — Sign In</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { gold: "#D4AF37", "gold-dark": "#a07c1e", "bg-base": "#121212" },
+          fontFamily: { display: ['"Playfair Display"', 'serif'], body: ['"DM Sans"', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    body { background-color: #121212; font-family: 'DM Sans', sans-serif; }
+    .gold-text { color: #D4AF37; }
+    .gold-border { border-color: #D4AF37; }
+    .glass { background: rgba(255,255,255,0.06); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.12); }
+    .btn-gold {
+      background: linear-gradient(135deg, #D4AF37 0%, #a07c1e 100%);
+      color: #121212; font-weight: 700; letter-spacing: 0.05em;
+      transition: all 0.3s; box-shadow: 0 4px 24px rgba(212,175,55,0.35);
+    }
+    .btn-gold:hover { transform: translateY(-1px); box-shadow: 0 8px 32px rgba(212,175,55,0.5); }
+    .btn-gold:active { transform: translateY(0); }
+    .input-field {
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+      color: #fff; outline: none; transition: border-color 0.3s;
+    }
+    .input-field:focus { border-color: #D4AF37; box-shadow: 0 0 0 3px rgba(212,175,55,0.15); }
+    .input-field::placeholder { color: rgba(255,255,255,0.3); }
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+    .animate-float { animation: float 6s ease-in-out infinite; }
+    .animate-fade-up { animation: fadeUp 0.7s ease forwards; }
+    /* decorative orbs */
+    .orb { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center relative overflow-hidden">
+
+  <!-- Background Orbs -->
+  <div class="orb w-96 h-96 top-[-100px] left-[-100px] opacity-20" style="background:#D4AF37;"></div>
+  <div class="orb w-80 h-80 bottom-[-80px] right-[-80px] opacity-10" style="background:#a07c1e;"></div>
+  <div class="orb w-64 h-64 top-1/2 left-1/4 opacity-5" style="background:#ffffff;"></div>
+
+  <!-- Grid overlay -->
+  <div class="absolute inset-0 opacity-[0.03]" style="background-image:linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px);background-size:40px 40px;"></div>
+
+  <div class="relative z-10 w-full max-w-md px-4 animate-fade-up">
+
+    <!-- Logo / Brand -->
+    <div class="text-center mb-10">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-4 animate-float"
+           style="background:linear-gradient(135deg,#D4AF37,#a07c1e);box-shadow:0 8px 32px rgba(212,175,55,0.4);">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="#121212" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-5-3.87M9 20H4v-2a4 4 0 015-3.87m6-4a4 4 0 10-8 0 4 4 0 008 0zm6 4a4 4 0 10-8 0"/>
+        </svg>
+      </div>
+      <h1 class="text-3xl font-display text-white tracking-wide">HR <span class="gold-text">Command</span></h1>
+      <p class="text-white/40 text-sm mt-1 font-light tracking-widest uppercase">Management System</p>
+    </div>
+
+    <!-- Login Card -->
+    <div class="glass rounded-3xl p-8 shadow-2xl">
+      <h2 class="text-xl font-semibold text-white mb-1">Welcome back</h2>
+      <p class="text-white/40 text-sm mb-8">Sign in to your account to continue</p>
+
+      <form id="loginForm" class="space-y-5" novalidate>
+        <!-- Email -->
+        <div>
+          <label class="block text-xs font-semibold text-white/60 uppercase tracking-widest mb-2">Email Address</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-4 flex items-center text-white/30">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12H8m0 0a4 4 0 108 0 4 4 0 00-8 0zm8 0v1a4 4 0 01-4 4H8a4 4 0 01-4-4v-1"/></svg>
+            </span>
+            <input id="email" type="email" placeholder="admin@company.com" required
+              class="input-field w-full pl-11 pr-4 py-3.5 rounded-xl text-sm" />
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div>
+          <label class="block text-xs font-semibold text-white/60 uppercase tracking-widest mb-2">Password</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-4 flex items-center text-white/30">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m0 0v2m0-2h2m-2 0H10m9-7V7a7 7 0 10-14 0v3"/></svg>
+            </span>
+            <input id="password" type="password" placeholder="••••••••" required
+              class="input-field w-full pl-11 pr-12 py-3.5 rounded-xl text-sm" />
+            <button type="button" id="togglePass"
+              class="absolute inset-y-0 right-4 flex items-center text-white/30 hover:text-white/60 transition-colors">
+              <svg class="w-4 h-4" id="eyeIcon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Error -->
+        <p id="loginError" class="text-red-400 text-xs text-center min-h-[1rem]"></p>
+
+        <!-- Submit -->
+        <button type="submit" id="loginBtn" class="btn-gold w-full py-3.5 rounded-xl text-sm flex items-center justify-center gap-2">
+          <span id="btnText">Sign In</span>
+          <svg id="btnSpinner" class="hidden animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+          </svg>
+        </button>
+      </form>
+    </div>
+
+    <p class="text-center text-white/20 text-xs mt-8">© 2025 HR Command · Secured by Firebase Auth</p>
+  </div>
+
+  <script>
+    // Toggle password visibility
+    document.getElementById("togglePass").addEventListener("click", () => {
+      const pw = document.getElementById("password");
+      pw.type = pw.type === "password" ? "text" : "password";
+    });
+  </script>
+
+  <!-- Firebase & Auth -->
+  <script type="module">
+    import { handleLogin } from "./js/auth.js";
+    handleLogin();
+  </script>
+</body>
+</html>

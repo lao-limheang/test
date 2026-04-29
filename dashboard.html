@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HR Command — Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: { gold: "#D4AF37", "gold-dark": "#a07c1e", "bg-base": "#121212" },
+        fontFamily: { display: ['"Playfair Display"', 'serif'], body: ['"DM Sans"', 'sans-serif'] } } }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    body { background-color: #121212; font-family: 'DM Sans', sans-serif; }
+    .glass { background: rgba(255,255,255,0.06); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.10); }
+    .glass-sidebar { background: rgba(18,18,18,0.95); backdrop-filter: blur(24px); border-right: 1px solid rgba(255,255,255,0.08); }
+    .nav-link { display:flex; align-items:center; gap:12px; padding:10px 16px; border-radius:12px; color:rgba(255,255,255,0.55); font-size:14px; font-weight:500; transition:all 0.2s; cursor:pointer; text-decoration:none; }
+    .nav-link:hover { background:rgba(212,175,55,0.10); color:#D4AF37; }
+    .nav-link.active { background:rgba(212,175,55,0.15); color:#D4AF37; border-left:3px solid #D4AF37; }
+    .stat-card { background: rgba(255,255,255,0.05); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.10); border-radius: 20px; padding: 28px; transition: all 0.3s; }
+    .stat-card:hover { border-color: rgba(212,175,55,0.4); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(212,175,55,0.12); }
+    .orb { position:absolute; border-radius:50%; filter:blur(80px); pointer-events:none; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+    .fade-up { animation: fadeUp 0.6s ease forwards; }
+    .delay-1 { animation-delay: 0.1s; opacity:0; }
+    .delay-2 { animation-delay: 0.2s; opacity:0; }
+    .delay-3 { animation-delay: 0.3s; opacity:0; }
+    .delay-4 { animation-delay: 0.4s; opacity:0; }
+    #sidebar { transition: transform 0.3s ease; }
+    @media (min-width: 1024px) { #sidebar { transform: translateX(0) !important; } }
+  </style>
+</head>
+<body class="min-h-screen relative overflow-x-hidden">
+
+  <div class="orb w-96 h-96 top-0 right-0 opacity-10" style="background:#D4AF37;"></div>
+  <div class="orb w-64 h-64 bottom-0 left-64 opacity-5" style="background:#a07c1e;"></div>
+
+  <!-- SIDEBAR -->
+  <aside id="sidebar" class="glass-sidebar fixed inset-y-0 left-0 z-40 w-64 flex flex-col -translate-x-full lg:translate-x-0">
+    <!-- Brand -->
+    <div class="p-6 border-b border-white/8">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+             style="background:linear-gradient(135deg,#D4AF37,#a07c1e);">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#121212" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-5-3.87M9 20H4v-2a4 4 0 015-3.87m6-4a4 4 0 10-8 0 4 4 0 008 0z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="text-white font-semibold text-base leading-tight">HR Command</div>
+          <div class="text-white/30 text-xs">Management System</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- User badge -->
+    <div class="px-4 py-4 border-b border-white/5">
+      <div class="flex items-center gap-3 px-3 py-2 rounded-xl bg-white/5">
+        <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
+             style="background:linear-gradient(135deg,#D4AF37,#a07c1e);color:#121212;">A</div>
+        <div class="min-w-0">
+          <div class="text-white text-xs font-semibold truncate" id="currentUser">Admin</div>
+          <div class="text-white/30 text-xs">Administrator</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nav -->
+    <nav class="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
+      <p class="text-white/20 text-xs uppercase tracking-widest px-3 mb-3 font-semibold">Main Menu</p>
+      <a href="dashboard.html" class="nav-link active">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Dashboard
+      </a>
+      <a href="staff.html" class="nav-link">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-5-3.87M9 20H4v-2a4 4 0 015-3.87m6-4a4 4 0 10-8 0 4 4 0 008 0z"/></svg>
+        Staff Management
+      </a>
+      <a href="attendance.html" class="nav-link">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m0 14v1m8-8h-1M5 12H4m15.07-6.07l-.71.71M6.64 17.36l-.71.71M17.36 17.36l-.71-.71M6.64 6.64l-.71-.71M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
+        Attendance
+      </a>
+      <a href="payroll.html" class="nav-link">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Payroll
+      </a>
+    </nav>
+
+    <!-- Logout -->
+    <div class="px-4 py-4 border-t border-white/8">
+      <button id="logoutBtn" class="nav-link w-full text-red-400/70 hover:text-red-400 hover:bg-red-400/10">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2h5a2 2 0 012 2v1"/></svg>
+        Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <!-- Mobile topbar -->
+  <header class="lg:hidden fixed top-0 inset-x-0 z-30 flex items-center justify-between px-4 py-3"
+          style="background:rgba(18,18,18,0.95);border-bottom:1px solid rgba(255,255,255,0.08);">
+    <button id="menuToggle" class="text-white/60 hover:text-white transition-colors">
+      <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <span class="text-white font-semibold">HR Command</span>
+    <div class="w-6"></div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="lg:ml-64 min-h-screen pt-16 lg:pt-0 px-4 md:px-8 py-8">
+
+    <!-- Header -->
+    <div class="mb-10 fade-up">
+      <p class="text-white/40 text-sm uppercase tracking-widest font-medium mb-1">Overview</p>
+      <h1 class="text-3xl font-display text-white">Dashboard</h1>
+    </div>
+
+    <!-- Stat Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mb-10">
+
+      <!-- Total Staff -->
+      <div class="stat-card fade-up delay-1">
+        <div class="flex items-start justify-between mb-5">
+          <div class="w-11 h-11 rounded-2xl flex items-center justify-center" style="background:rgba(212,175,55,0.15);">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-5-3.87M9 20H4v-2a4 4 0 015-3.87m6-4a4 4 0 10-8 0 4 4 0 008 0z"/></svg>
+          </div>
+          <span class="text-emerald-400 text-xs font-semibold bg-emerald-400/10 px-2 py-1 rounded-full">+2 this month</span>
+        </div>
+        <div class="text-4xl font-display text-white mb-1" id="statTotalStaff">—</div>
+        <div class="text-white/40 text-sm">Total Staff</div>
+      </div>
+
+      <!-- Present Today -->
+      <div class="stat-card fade-up delay-2">
+        <div class="flex items-start justify-between mb-5">
+          <div class="w-11 h-11 rounded-2xl flex items-center justify-center" style="background:rgba(52,211,153,0.15);">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#34d399" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <span class="text-white/30 text-xs bg-white/5 px-2 py-1 rounded-full">Today</span>
+        </div>
+        <div class="text-4xl font-display text-white mb-1" id="statPresent">—</div>
+        <div class="text-white/40 text-sm">Present Today</div>
+      </div>
+
+      <!-- Absent Today -->
+      <div class="stat-card fade-up delay-3">
+        <div class="flex items-start justify-between mb-5">
+          <div class="w-11 h-11 rounded-2xl flex items-center justify-center" style="background:rgba(248,113,113,0.12);">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#f87171" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <span class="text-white/30 text-xs bg-white/5 px-2 py-1 rounded-full">Today</span>
+        </div>
+        <div class="text-4xl font-display text-white mb-1" id="statAbsent">—</div>
+        <div class="text-white/40 text-sm">Absent Today</div>
+      </div>
+
+      <!-- Scans Today -->
+      <div class="stat-card fade-up delay-4">
+        <div class="flex items-start justify-between mb-5">
+          <div class="w-11 h-11 rounded-2xl flex items-center justify-center" style="background:rgba(139,92,246,0.15);">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#a78bfa" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m0 14v1m8-8h-1M5 12H4m15.07-6.07l-.71.71M6.64 17.36l-.71.71M17.36 17.36l-.71-.71M6.64 6.64l-.71-.71M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
+          </div>
+          <span class="text-white/30 text-xs bg-white/5 px-2 py-1 rounded-full">Scans</span>
+        </div>
+        <div class="text-4xl font-display text-white mb-1" id="statScans">—</div>
+        <div class="text-white/40 text-sm">QR Scans Today</div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="fade-up delay-3">
+      <h2 class="text-white/60 text-sm uppercase tracking-widest font-semibold mb-5">Quick Access</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <a href="staff.html" class="glass rounded-2xl p-5 flex items-center gap-4 hover:border-[#D4AF37]/40 transition-all group">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform" style="background:rgba(212,175,55,0.15);">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
+          </div>
+          <div>
+            <div class="text-white text-sm font-semibold">Add Staff</div>
+            <div class="text-white/40 text-xs">Manage team members</div>
+          </div>
+        </a>
+        <a href="attendance.html" class="glass rounded-2xl p-5 flex items-center gap-4 hover:border-[#D4AF37]/40 transition-all group">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform" style="background:rgba(52,211,153,0.12);">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#34d399" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><circle cx="12" cy="13" r="3"/></svg>
+          </div>
+          <div>
+            <div class="text-white text-sm font-semibold">Scan QR</div>
+            <div class="text-white/40 text-xs">Mark attendance</div>
+          </div>
+        </a>
+        <a href="payroll.html" class="glass rounded-2xl p-5 flex items-center gap-4 hover:border-[#D4AF37]/40 transition-all group">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform" style="background:rgba(139,92,246,0.15);">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#a78bfa" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+          </div>
+          <div>
+            <div class="text-white text-sm font-semibold">Payroll</div>
+            <div class="text-white/40 text-xs">Calculate salaries</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // Mobile sidebar toggle
+    document.getElementById("menuToggle").addEventListener("click", () => {
+      document.getElementById("sidebar").classList.toggle("-translate-x-full");
+    });
+  </script>
+
+  <script type="module">
+    import { requireAuth, handleLogout, showCurrentUser } from "./js/auth.js";
+    import { collection, getDocs, query, where, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { db } from "./js/firebase-config.js";
+
+    requireAuth();
+    handleLogout();
+    showCurrentUser();
+
+    async function loadStats() {
+      try {
+        // Total staff
+        const staffSnap = await getDocs(collection(db, "staffs"));
+        document.getElementById("statTotalStaff").textContent = staffSnap.size;
+
+        // Today's attendance
+        const today = new Date(); today.setHours(0,0,0,0);
+        const q = query(collection(db, "attendance"), where("timestamp", ">=", today));
+        const attSnap = await getDocs(q);
+
+        const presentIds = new Set();
+        attSnap.docs.forEach(d => {
+          if (d.data().status === "Check-In") presentIds.add(d.data().staffId);
+        });
+
+        const presentCount = presentIds.size;
+        const absentCount = Math.max(0, staffSnap.size - presentCount);
+        document.getElementById("statPresent").textContent = presentCount;
+        document.getElementById("statAbsent").textContent = absentCount;
+        document.getElementById("statScans").textContent = attSnap.size;
+      } catch (err) {
+        console.error("Stats error:", err);
+      }
+    }
+
+    loadStats();
+  </script>
+</body>
+</html>
